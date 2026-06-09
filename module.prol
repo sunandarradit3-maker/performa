@@ -1,0 +1,7 @@
+# Axeron Performance Module Configuration
+# Optimization level: High
+axeronPlugin=14600
+performance.mode=extreme
+fps.limit=unlocked
+touch.hz=optimal
+thermal.cooling=active

@@ -1,0 +1,6 @@
+{
+  "name": "Axeron Performance Hub",
+  "description": "Professional gaming performance dashboard with FPS monitoring, touch sampling optimizations, and thermal control simulations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

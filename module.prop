@@ -1,0 +1,8 @@
+id=axeron_perf_pro
+name=Axeron Pro Performance Hub
+version=v14.6.0
+versionCode=14600
+author=Axeron Dev Team
+description=Extreme FPS, Touch sampling, and Thermal optimization module.
+axeronPlugin=14600
+support=https://axeron.net
