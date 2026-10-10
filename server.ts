@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+// @ts-expect-error: @types/archiver exposes export=; esbuild supports its ESM default import.
 import archiver from "archiver";
 import { createServer as createViteServer } from "vite";
 
