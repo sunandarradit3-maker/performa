@@ -1,0 +1,50 @@
+name: Ditz Booster Pro APK
+on:
+  push:
+    branches: [ditz-booster-pro]
+    paths:
+      - "ditz-source-code.tar.zst.b64"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore Android project
+        run: |
+          test -s ditz-source-code.tar.zst.b64
+          mkdir -p ditz-booster-pro
+          base64 -d ditz-source-code.tar.zst.b64 | zstd -d -c | tar -x -C ditz-booster-pro
+          test -f ditz-booster-pro/settings.gradle
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 35
+        run: sdkmanager --install 'platforms;android-35' 'build-tools;35.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Compile debug APK
+        run: gradle -p ditz-booster-pro :app:assembleDebug --no-daemon --stacktrace
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ditz-Booster-Pro-APK
+          path: ditz-booster-pro/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Commit unpacked source code
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ditz-booster-pro
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish Ditz Booster Pro Android sources"
+            git push origin HEAD:ditz-booster-pro
+          fi
